@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd /tmp)",
+      "Bash(grep -oiE \"[A-Z][a-zA-Z0-9 ,'/&.+@:!?\\(\\)-]{12,110}\" MainContainer-CvDghMCY.js)",
+      "Bash(grep -oiE \"[A-Za-z][a-zA-Z0-9 ,'/&.+@:!?\\(\\)-]{5,80}\" MyWorks-Bwhzorcj.js)"
+    ]
+  }
+}
