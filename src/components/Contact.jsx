@@ -1,70 +1,50 @@
-import { contact, profile } from '../data/profile'
-import { useReveal } from '../hooks/useReveal'
-import { ArrowUpRight } from './icons'
+import { useEffect } from 'react'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { config } from '../data/config'
+import { ArrowOut, Copyright } from '../lib/icons'
 
-const socialLinks = [
-  { label: 'GitHub', url: contact.github },
-  { label: 'LinkedIn', url: contact.linkedin },
-  { label: 'Twitter', url: contact.twitter },
-  { label: 'Email', url: `mailto:${contact.email}` },
-]
+gsap.registerPlugin(ScrollTrigger)
 
-// Footer-style contact: giant name + 3 columns (Email/Location, Social, Credit).
+// Contact footer: heading + email/location, social links, and credit line.
 export default function Contact() {
-  const scope = useReveal('[data-reveal]', { y: 36 })
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: { trigger: '.contact-section', start: 'top 80%', end: 'bottom center', toggleActions: 'play none none none' },
+      })
+      tl.fromTo('.contact-section h3', { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: .8, ease: 'power3.out' })
+        .fromTo('.contact-box', { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: .6, stagger: .15, ease: 'power3.out' }, '-=0.4')
+    })
+    return () => ctx.revert()
+  }, [])
+
+  const { contact, social, developer } = config
+
   return (
-    <section className="section contact" id="contact" ref={scope}>
-      <div
-        className="glow"
-        style={{ width: 520, height: 520, background: 'var(--accent)', left: '50%', top: '10%', transform: 'translateX(-50%)', opacity: 0.16 }}
-      />
-      <div className="container">
-        <p className="contact-pre" data-reveal>
-          Have a project in mind? Let's build it.
-        </p>
-        <h2 className="contact-name" data-reveal>
-          {profile.shortName}
-        </h2>
-
-        <div className="contact-grid">
-          <div className="contact-col" data-reveal>
-            <span className="contact-col-h">Email</span>
-            <a href={`mailto:${contact.email}`} data-cursor>
-              {contact.email}
-            </a>
-            <span className="contact-col-h" style={{ marginTop: 22 }}>
-              Location
-            </span>
-            <span className="text-dim">{contact.location}</span>
+    <div className="contact-section section-container" id="contact">
+      <div className="contact-container">
+        <h3>{developer.fullName}</h3>
+        <div className="contact-flex">
+          <div className="contact-box">
+            <h4>Email</h4>
+            <p><a href={`mailto:${contact.email}`} data-cursor="disable">{contact.email}</a></p>
+            <h4>Location</h4>
+            <p><span>{social.location}</span></p>
           </div>
-
-          <div className="contact-col" data-reveal>
-            <span className="contact-col-h">Social</span>
-            {socialLinks.map((s) => (
-              <a
-                key={s.label}
-                href={s.url}
-                target={s.url.startsWith('http') ? '_blank' : undefined}
-                rel="noreferrer"
-                className="contact-social-link"
-                data-cursor
-              >
-                {s.label} <ArrowUpRight />
-              </a>
-            ))}
+          <div className="contact-box">
+            <h4>Social</h4>
+            <a href={contact.github} target="_blank" rel="noopener noreferrer" data-cursor="disable" className="contact-social">Github <ArrowOut /></a>
+            <a href={contact.linkedin} target="_blank" rel="noopener noreferrer" data-cursor="disable" className="contact-social">Linkedin <ArrowOut /></a>
+            <a href={contact.twitter} target="_blank" rel="noopener noreferrer" data-cursor="disable" className="contact-social">Twitter <ArrowOut /></a>
+            <a href={contact.instagram} target="_blank" rel="noopener noreferrer" data-cursor="disable" className="contact-social">Instagram <ArrowOut /></a>
           </div>
-
-          <div className="contact-col" data-reveal>
-            <span className="contact-col-h">Designed &amp; Developed by</span>
-            <span className="accent" style={{ fontWeight: 600 }}>
-              {profile.name}
-            </span>
-            <span className="text-dim" style={{ marginTop: 16 }}>
-              © 2026 — Built from scratch with React, Three.js &amp; GSAP.
-            </span>
+          <div className="contact-box">
+            <h2>Designed and Developed <br /> by <span>{developer.fullName}</span></h2>
+            <h5><Copyright /> {new Date().getFullYear()}</h5>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   )
 }

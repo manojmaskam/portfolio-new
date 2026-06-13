@@ -16,7 +16,7 @@ A 3D, animated personal portfolio built from scratch with React + Vite, inspired
 ```bash
 npm install
 npm run dev      # http://localhost:5173
-npm run build    # production build -> dist/
+npm run build    # production build -> dist/npm
 npm run preview  # preview the production build
 ```
 

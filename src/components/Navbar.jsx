@@ -1,82 +1,36 @@
-import { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { profile, contact, socials } from '../data/profile'
-import { iconByKey } from './icons'
+import { config } from '../data/config'
 
-const links = [
-  { label: 'ABOUT', id: 'about' },
-  { label: 'WORK', id: 'work' },
-  { label: 'CONTACT', id: 'contact' },
-]
+// Reveal-on-hover link: the label slides up and a duplicate slides in from below.
+function HoverLink({ text }) {
+  return (
+    <div className="hover-link" data-cursor="disable">
+      <div className="hover-in">{text} <div>{text}</div></div>
+    </div>
+  )
+}
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false)
-  const [open, setOpen] = useState(false)
-  const location = useLocation()
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
-    onScroll()
-    window.addEventListener('scroll', onScroll)
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  const go = (id) => {
-    setOpen(false)
-    if (location.pathname !== '/') {
-      navigate('/', { state: { scrollTo: id } })
-    } else {
-      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
-    }
+  // Smooth-scroll to a section, letting Lenis (window.__lenis) drive it on desktop.
+  const go = (e, id) => {
+    e.preventDefault()
+    const target = document.querySelector(id)
+    if (!target) return
+    if (window.__lenis) window.__lenis.scrollTo(target, { offset: 0, duration: 1.5 })
+    else target.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
-    <header className={`navbar ${scrolled ? 'scrolled' : ''}`}>
-      <div className="container navbar-inner">
-        <button className="nav-logo" onClick={() => go('top')} aria-label="Home">
-          {profile.initials}
-        </button>
-
-        <a className="nav-email" href={`mailto:${contact.email}`} data-cursor>
-          {contact.email}
-        </a>
-
-        <nav className={`nav-links ${open ? 'open' : ''}`}>
-          {links.map((l) => (
-            <a key={l.id} onClick={() => go(l.id)} role="button" tabIndex={0}>
-              {l.label}
-            </a>
-          ))}
-          <div className="nav-socials">
-            {socials.map((s) => {
-              const Icon = iconByKey[s.key]
-              return (
-                <a
-                  key={s.key}
-                  href={s.url}
-                  target={s.url.startsWith('http') ? '_blank' : undefined}
-                  rel="noreferrer"
-                  aria-label={s.label}
-                  onClick={() => setOpen(false)}
-                >
-                  {Icon ? <Icon /> : s.label[0]}
-                </a>
-              )
-            })}
-          </div>
-        </nav>
-
-        <button
-          className={`nav-toggle ${open ? 'open' : ''}`}
-          onClick={() => setOpen((o) => !o)}
-          aria-label="Menu"
-        >
-          <span />
-          <span />
-          <span />
-        </button>
+    <>
+      <div className="header">
+        <a href="/#" className="navbar-title" data-cursor="disable">{config.monogram}</a>
+        <a href={`mailto:${config.contact.email}`} className="navbar-connect" data-cursor="disable">{config.contact.email}</a>
+        <ul>
+          <li><a href="#about" onClick={(e) => go(e, '#about')}><HoverLink text="ABOUT" /></a></li>
+          <li><a href="#work" onClick={(e) => go(e, '#work')}><HoverLink text="WORK" /></a></li>
+          <li><a href="#contact" onClick={(e) => go(e, '#contact')}><HoverLink text="CONTACT" /></a></li>
+        </ul>
       </div>
-    </header>
+      <div className="nav-fade" />
+    </>
   )
 }

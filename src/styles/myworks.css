@@ -1,0 +1,24 @@
+.myworks { min-height: 100vh; padding: 120px 0 100px; background-color: var(--backgroundColor); }
+.myworks-inner { margin: 0 auto; }
+.myworks-back { display: inline-block; font-size: 15px; letter-spacing: .5px; opacity: .7; margin-bottom: 40px; }
+.myworks-back:hover { opacity: 1; }
+.myworks-title { font-size: 56px; line-height: 1.05; font-weight: 500; margin: 0 0 60px; background: linear-gradient(180deg, #fff, #c2a4ff); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
+
+.myworks-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 24px; }
+.pcard { border: 1px solid #ffffff14; background: #ffffff06; border-radius: 16px; padding: 24px; transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease; }
+.pcard:hover { transform: translateY(-6px); border-color: #c2a4ff66; box-shadow: 0 20px 50px #00000060; }
+.pcard-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.pcard-num { font-size: 22px; font-weight: 700; color: var(--accentColor); }
+.pcard-cat { font-size: 12px; letter-spacing: 1px; text-transform: uppercase; opacity: .6; }
+.pcard-img { width: 100%; height: 180px; object-fit: cover; border-radius: 10px; margin-bottom: 18px; }
+.pcard h3 { font-size: 24px; font-weight: 600; margin: 0 0 10px; display: flex; align-items: center; gap: 8px; }
+.pcard h3 svg { font-size: 18px; opacity: .6; }
+.pcard p { font-size: 14px; line-height: 21px; color: #b9b6bf; margin: 0 0 18px; }
+.pcard-tech { display: flex; flex-wrap: wrap; gap: 6px; }
+.pcard-tech span { font-size: 12px; padding: 3px 10px; border-radius: 30px; background: #ffffff14; border: 1px solid #ffffff22; }
+
+@media only screen and (max-width: 600px) {
+  .myworks { padding: 90px 0 60px; }
+  .myworks-title { font-size: 36px; }
+  .myworks-grid { grid-template-columns: 1fr; }
+}

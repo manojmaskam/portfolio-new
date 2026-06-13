@@ -3,7 +3,14 @@
     "allow": [
       "Bash(cd /tmp)",
       "Bash(grep -oiE \"[A-Z][a-zA-Z0-9 ,'/&.+@:!?\\(\\)-]{12,110}\" MainContainer-CvDghMCY.js)",
-      "Bash(grep -oiE \"[A-Za-z][a-zA-Z0-9 ,'/&.+@:!?\\(\\)-]{5,80}\" MyWorks-Bwhzorcj.js)"
+      "Bash(grep -oiE \"[A-Za-z][a-zA-Z0-9 ,'/&.+@:!?\\(\\)-]{5,80}\" MyWorks-Bwhzorcj.js)",
+      "WebFetch(domain:red1-for-hek.vercel.app)",
+      "mcp__Claude_in_Chrome__navigate",
+      "Bash(curl -s https://red1-for-hek.vercel.app/ -o ref.html)",
+      "Bash(curl -s https://red1-for-hek.vercel.app/assets/index-Dy5XKj18.css -o ref.css)",
+      "Bash(curl -s https://red1-for-hek.vercel.app/assets/index-BeVrs9qr.js -o ref.js)",
+      "Bash(curl -s -m 5 http://localhost:58874/)",
+      "Bash(curl -s -m 5 http://localhost:5173/)"
     ]
   }
 }
